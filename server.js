@@ -6,7 +6,7 @@ http
   .createServer((req, res) => {
     let addr = req.url,
       q = url.parse(addr, true),
-      filePath = "";
+      filePath = "" ;
 
     fs.appendFile(
       "log.txt",
