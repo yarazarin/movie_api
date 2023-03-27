@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
+app.use(morgan("common"));
 app.get("/movies", (req, res) => {
   const movies = [
     { title: "The Lord Of The Earring 01", year: "2001" },
@@ -30,7 +31,6 @@ app.get("/documentation.html", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
 });
 
-app.use(morgan("common"));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
