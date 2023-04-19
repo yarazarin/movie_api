@@ -6,7 +6,7 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Director = Models.Director;
 
-mongoose.connect("mongodb://localhost:27017/myFlix", {
+mongoose.connect("mongodb://127.0.0.1:27017/myFlix", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
