@@ -17,37 +17,19 @@ mongoose.connect("mongodb://127.0.0.1:27017/myFlix", {
   useUnifiedTopology: true,
 });
 
-
-
 app.use(morgan("common"));
 app.use(bodyParser.json());
 
+/****/
+//ROOT
 app.get("/", (req, res) => {
-  res.send("Movie app!");
+  res.send("WELCOME TO MYFLIX!");
 });
 
-app.get("/movies", (req, res) => {
-  Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+/****/
+//USERS
 
-app.get("/movies/:Title", (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
-    .then((movie) => {
-      res.json(movie);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
-
+//GET USERS
 app.get("/users", (req, res) => {
   Users.find()
     .then((users) => {
@@ -59,6 +41,7 @@ app.get("/users", (req, res) => {
     });
 });
 
+//GET USER
 app.get("/users/:Username", (req, res) => {
   Users.findOne({ Username: req.params.Username })
     .then((user) => {
@@ -70,6 +53,7 @@ app.get("/users/:Username", (req, res) => {
     });
 });
 
+//CREATE USER
 app.post("/users", (req, res) => {
   if (!req.body.Username || !req.body.Email) {
     return res.status(400).send("Username, Password, and Email required");
@@ -78,7 +62,7 @@ app.post("/users", (req, res) => {
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
+        return res.status(400).send(req.body.Username + " already exists");
       } else {
         Users.create({
           Username: req.body.Username,
@@ -101,18 +85,7 @@ app.post("/users", (req, res) => {
     });
 });
 
-//UPDATE
-app.get("/users/:Username", (req, res) => {
-  Users.findOne({ Username: req.params.Username })
-    .then((user) => {
-      res.json(user);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
-
+//UPDATE USER
 app.put("/users/:Username", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
@@ -128,7 +101,7 @@ app.put("/users/:Username", (req, res) => {
     (err, updatedUser) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Error: " + err);
+        res.status(500).send("Cant update the informations; Error: " + err);
       } else {
         res.json(updatedUser);
       }
@@ -136,7 +109,7 @@ app.put("/users/:Username", (req, res) => {
   );
 });
 
-// CREATE
+// ADD A MOVIE TO USER
 app.post("/users/:Username/movies/:MovieID", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
@@ -155,7 +128,7 @@ app.post("/users/:Username/movies/:MovieID", (req, res) => {
   );
 });
 
-// DELETE
+// DELETE MOVIE FROM USER
 app.delete("/users/:Username/movies/:MovieID", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
@@ -174,7 +147,7 @@ app.delete("/users/:Username/movies/:MovieID", (req, res) => {
   );
 });
 
-// DELETE
+// DELETE A USER
 app.delete("/users/:Username", (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
@@ -190,6 +163,34 @@ app.delete("/users/:Username", (req, res) => {
     });
 });
 
+/****/
+//MOVIES
+
+//GET MOVIES
+app.get("/movies", (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//GET MOVIE
+app.get("/movies/:Title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//GET GENRE NAME
 app.get("/movies/genre/:Name", (req, res) => {
   Genres.findOne({ Name: req.params.Name })
     .then((genre) => {
@@ -201,6 +202,7 @@ app.get("/movies/genre/:Name", (req, res) => {
     });
 });
 
+//GET DIRECTOR
 app.get("/movies/director/:Name", (req, res) => {
   Director.findOne({ Name: req.params.Name })
     .then((director) => {
@@ -212,7 +214,9 @@ app.get("/movies/director/:Name", (req, res) => {
     });
 });
 
-app.get("/documentation.html", (req, res) => {
+/****/
+//GET DOCUMENTATION
+app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
 });
 
