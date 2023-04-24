@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <title>Documentation</title>
   </head>
   <body>
@@ -38,99 +38,100 @@
       <li>Allow users to remove a movie from their list of favorites</li>
       <li>Allow existing users to deregister</li>
     </ul>
-
-<div class="doc__table">
-  <table>
-    <thead>
-      <tr>
-        <th>N</th>
-        <th>Business Logic</th>
-        <th>URL</th>
-        <th>HTTP Method</th>
-        <th>Query Parameters</th>
-        <th>Request Body Data Format</th>
-        <th>Response Body Data Format</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Get all movies</td>
-        <td>/movies</td>
-        <td>GET</td>
-        <td>N/A</td>
-        <td>N/A</td>
-        <td>JSON object with data about all movies</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Get data about a single movie</td>
-        <td>/movies/:Title</td>
-        <td>GET</td>
-        <td>Movie Title</td>
-        <td>N/A</td>
-        <td>JSON object with data about a single movie</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Get data about a specific genre of movie</td>
-        <td>/movies/genre/:genreName</td>
-        <td>GET</td>
-        <td>Genre Name</td>
-        <td>N/A</td>
-        <td>JSON object with data about a specific genre of movie</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Get data about a specific director</td>
-        <td>/movies/directors/:directorName</td>
-        <td>GET</td>
-        <td>Director Name</td>
-        <td>N/A</td>
-        <td>JSON object with data about a specific director</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Add a new user</td>
-        <td>/users</td>
-        <td>POST</td>
-        <td>N/A</td>
-        <td>JSON object with data about the new user to be added</td>
-        <td>
-          JSON object with data about the user that was added, including an ID
-        </td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>Update user information</td>
-        <td>/users/:Username</td>
-        <td>PUT</td>
-        <td>Username</td>
-        <td>JSON object with data to be updated about the user</td>
-        <td>JSON object with updated user data</td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>Add a movie to a user's favorites</td>
-        <td>/users/:Username/movies/:MovieID</td>
-        <td>POST</td>
-        <td>Username, MovieID</td>
-        <td>N/A</td>
-        <td>
-          JSON object with data about the user and the movie that was added
-        </td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>Delete User</td>
-        <td>/users/:Username</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>Text Message</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <hr />
+    <div class="doc__table">
+      <table>
+        <thead>
+          <tr>
+            <th>N</th>
+            <th>Business Logic</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Query Parameters</th>
+            <th>Request Body Data Format</th>
+            <th>Response Body Data Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Get all movies</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>JSON object with data about all movies</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Get data about a single movie</td>
+            <td>/movies/:Title</td>
+            <td>GET</td>
+            <td>Movie Title</td>
+            <td>N/A</td>
+            <td>JSON object with data about a single movie</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Get data about a specific genre of movie</td>
+            <td>/movies/genre/:genreName</td>
+            <td>GET</td>
+            <td>Genre Name</td>
+            <td>N/A</td>
+            <td>JSON object with data about a specific genre of movie</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Get data about a specific director</td>
+            <td>/movies/directors/:directorName</td>
+            <td>GET</td>
+            <td>Director Name</td>
+            <td>N/A</td>
+            <td>JSON object with data about a specific director</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Add a new user</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td>N/A</td>
+            <td>JSON object with data about the new user to be added</td>
+            <td>
+              JSON object with data about the user that was added, including an
+              ID
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Update user information</td>
+            <td>/users/:Username</td>
+            <td>PUT</td>
+            <td>Username</td>
+            <td>JSON object with data to be updated about the user</td>
+            <td>JSON object with updated user data</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Add a movie to a user's favorites</td>
+            <td>/users/:Username/movies/:MovieID</td>
+            <td>POST</td>
+            <td>Username, MovieID</td>
+            <td>N/A</td>
+            <td>
+              JSON object with data about the user and the movie that was added
+            </td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Delete User</td>
+            <td>/users/:Username</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>None</td>
+            <td>Text Message</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
