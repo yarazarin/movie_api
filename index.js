@@ -6,6 +6,9 @@ const Director = Models.Director;
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+let auth = require("./auth")(app);
+const passport = require("passport");
+require("./passport.js");
 const uuid = require("uuid");
 const morgan = require("morgan");
 
@@ -17,8 +20,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/myFlix", {
   useUnifiedTopology: true,
 });
 
-app.use(morgan("common"));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(morgan("common"));
 
 /****/
 //ROOT
@@ -164,16 +169,20 @@ app.delete("/users/:Username", (req, res) => {
 //MOVIES
 
 //GET MOVIES
-app.get("/movies", (req, res) => {
-  Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 //GET MOVIE TITLE
 app.get("/movies/:Title", (req, res) => {
