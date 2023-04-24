@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 /****/
-//USERS
+//USERS PARTS
 
 //GET USERS
 app.get("/users", (req, res) => {
@@ -166,7 +166,7 @@ app.delete("/users/:Username", (req, res) => {
 });
 
 /****/
-//MOVIES
+//MOVIES PARTS
 
 //GET MOVIES
 app.get(
