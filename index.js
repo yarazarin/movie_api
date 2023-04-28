@@ -8,6 +8,8 @@ const passport = require("passport");
 const uuid = require("uuid");
 const morgan = require("morgan");
 const Models = require("./models.js");
+const { check, validationResult } = require("express-validator");
+
 const Genres = Models.Genre;
 const Director = Models.Director;
 const Movies = Models.Movie;
@@ -80,37 +82,49 @@ app.get("/users/:Username", (req, res) => {
 });
 
 //CREATE USER
-app.post("/users", (req, res) => {
-  if (!req.body.Username || !req.body.Email) {
-    return res.status(400).send("Username, Password, and Email required");
-  }
+app.post(
+  "/users",
+  [
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail(),
+  ],
+  (req, res) => {
+    if (!req.body.Username || !req.body.Email) {
+      return res.status(400).send("Username, Password, and Email required");
+    }
 
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + " already exists");
-      } else {
-        Users.create({
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
-        })
-          .then((user) => {
-            res.status(201).json(user);
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ Username: req.body.Username })
+      .then((user) => {
+        if (user) {
+          return res.status(400).send(req.body.Username + " already exists");
+        } else {
+          Users.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
           })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
+            .then((user) => {
+              res.status(201).json(user);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 
 //UPDATE USER
 app.put("/users/:Username", (req, res) => {
@@ -136,22 +150,29 @@ app.put("/users/:Username", (req, res) => {
 });
 
 // ADD A MOVIE TO USER
-app.post("/users/:Username/movies/:MovieID", (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    {
-      $push: { FavoriteMovies: req.params.MovieID },
-    },
-    { new: true }
-  )
-    .then((updatedUser) => {
-      res.status(201).json(updatedUser);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+app.post(
+  "/users/:Username/movies/:MovieID",
+  [
+    check("Username", "Username is required").notEmpty(),
+    check("MovieID", "MovieID is required").notEmpty(),
+  ],
+  (req, res) => {
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $push: { FavoriteMovies: req.params.MovieID },
+      },
+      { new: true }
+    )
+      .then((updatedUser) => {
+        res.status(201).json(updatedUser);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 // DELETE MOVIE FROM USER
 app.delete("/users/:Username/movies/:MovieID", (req, res) => {
