@@ -43,6 +43,11 @@ mongoose.connect(process.env.CONNECTION_YaRa, {
   useUnifiedTopology: true,
 });
 
+// mongoose.connect("mongodb://127.0.0.1:27017/myFlix", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
