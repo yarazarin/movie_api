@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-mongoose.connect("mongodb://127.0.0.1:27017/myFlix", {
+mongoose.connect(process.env.CONNECTION_YaRa, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
