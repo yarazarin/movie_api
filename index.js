@@ -31,10 +31,10 @@ app.use(
   })
 );
 
+app.use(bodyParser.json());
 let auth = require("./auth")(app);
 require("./passport.js");
 app.use(passport.initialize());
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
