@@ -15,7 +15,7 @@ const Director = Models.Director;
 const Movies = Models.Movie;
 const Users = Models.User;
 
-let allowedOrigins = ["http://localhost:8080", "http://localhost:1234", "https://evening-inlet-09970.herokuapp.com"];
+let allowedOrigins = ["http://localhost:8080", "http://localhost:1234"];
 app.use(
   cors({
     origin: (origin, callback) => {
