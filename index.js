@@ -166,8 +166,6 @@ app.post(
     check("MovieID", "MovieID is required").notEmpty(),
   ],
   (req, res) => {
-    console.log("Ya: Add movie request received for user:", req.params.Username, "and movie:", req.params.MovieID);
-
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
