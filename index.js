@@ -15,7 +15,11 @@ const Director = Models.Director;
 const Movies = Models.Movie;
 const Users = Models.User;
 
-let allowedOrigins = ["http://localhost:8080", "http://localhost:1234"];
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "https://yaramyflix.netlify.app",
+];
 app.use(
   cors({
     origin: (origin, callback) => {
