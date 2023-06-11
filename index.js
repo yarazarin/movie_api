@@ -140,12 +140,11 @@ app.post(
 );
 
 // UPDATE USER
+
 app.put("/users/:Username", (req, res) => {
-  // First, check if the new username already exists in the database
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        // If the new username already exists, send an error message
         res
           .status(400)
           .send(
@@ -154,7 +153,6 @@ app.put("/users/:Username", (req, res) => {
               " already exists. Please choose another username."
           );
       } else {
-        // If the new username is unique, proceed with updating the user
         Users.findOneAndUpdate(
           { Username: req.params.Username },
           {
