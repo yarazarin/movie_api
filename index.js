@@ -140,18 +140,11 @@ app.post(
 );
 
 // UPDATE USER
-
 app.put("/users/:Username", (req, res) => {
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        res
-          .status(400)
-          .send(
-            "The new username " +
-              req.body.Username +
-              " already exists. Please choose another username."
-          );
+        res.status(400).send("the name is exists!");
       } else {
         Users.findOneAndUpdate(
           { Username: req.params.Username },
