@@ -140,37 +140,44 @@ app.post(
 );
 
 // UPDATE USER
+// UPDATE USER
 app.put("/users/:Username", (req, res) => {
-  Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) {
-        res.status(400).send("the name is exists!");
-      } else {
-        Users.findOneAndUpdate(
-          { Username: req.params.Username },
-          {
-            $set: {
-              Username: req.body.Username,
-              Password: req.body.Password,
-              // Password: hashedPassword,
-              Email: req.body.Email,
-              Birthday: req.body.Birthday,
-            },
-          },
-          { new: true }
-        )
-          .then((updatedUser) => {
-            res.status(201).json(updatedUser);
-          })
-          .catch((err) => {
-            console.error(err);
-            res.status(500).send("Error: " + err);
-          });
-      }
+  if (req.body.Username && req.body.Username !== req.params.Username) {
+    Users.findOne({ Username: req.body.Username })
+      .then((user) => {
+        if (user) {
+          res.status(400).send("The new username is already taken!");
+          return;
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+   // Hash the new password if provided
+  let hashedPassword = req.body.Password
+    ? Users.hashPassword(req.body.Password)
+    : undefined;
+   // Update the user information
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username || req.params.Username,
+        // Password: hashedPassword || req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday,
+      },
+    },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.status(201).json(updatedUser);
     })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
     });
 });
 
