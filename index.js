@@ -139,27 +139,47 @@ app.post(
   }
 );
 
-//UPDATE USER
+// UPDATE USER
 app.put("/users/:Username", (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    {
-      $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        // Password: hashedPassword,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday,
-      },
-    },
-    { new: true }
-  )
-    .then((updatedUser) => {
-      res.status(201).json(updatedUser);
+  // First, check if the new username already exists in the database
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        // If the new username already exists, send an error message
+        res
+          .status(400)
+          .send(
+            "The new username " +
+              req.body.Username +
+              " already exists. Please choose another username."
+          );
+      } else {
+        // If the new username is unique, proceed with updating the user
+        Users.findOneAndUpdate(
+          { Username: req.params.Username },
+          {
+            $set: {
+              Username: req.body.Username,
+              Password: req.body.Password,
+              // Password: hashedPassword,
+              Email: req.body.Email,
+              Birthday: req.body.Birthday,
+            },
+          },
+          { new: true }
+        )
+          .then((updatedUser) => {
+            res.status(201).json(updatedUser);
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+          });
+      }
     })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
     });
 });
 
