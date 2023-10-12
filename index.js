@@ -17,7 +17,7 @@ const Users = Models.User;
 
 let allowedOrigins = [
   "http://localhost:8080",
-  "http://localhost:4200/",
+  "http://localhost:4200",
   "http://localhost:1234",
   "https://yaramyflix.netlify.app",
 ];
