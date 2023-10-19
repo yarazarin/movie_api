@@ -21,7 +21,7 @@ let allowedOrigins = [
   "http://localhost:4200",
   "http://localhost:1234",
   "https://yaramyflix.netlify.app",
-  "https://yarazarin.github.io/myFlix-Angular-client/welcome",
+  "https://yarazarin.github.io/myFlix-Angular-client",
 ];
 app.use(
   cors({
