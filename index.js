@@ -20,6 +20,7 @@ let allowedOrigins = [
   "http://localhost:4200",
   "http://localhost:1234",
   "https://yaramyflix.netlify.app",
+  "https://yarazarin.github.io/myFlix-Angular-client",
 ];
 app.use(
   cors({
@@ -156,11 +157,11 @@ app.put("/users/:Username", (req, res) => {
         res.status(500).send("Error: " + error);
       });
   }
-   // Hash the new password if provided
+  // Hash the new password if provided
   let hashedPassword = req.body.Password
     ? Users.hashPassword(req.body.Password)
     : undefined;
-   // Update the user information
+  // Update the user information
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
