@@ -25,6 +25,7 @@ let allowedOrigins = [
   "http://localhost:1234",
   "https://yaramyflix.netlify.app",
   "https://yarazarin.github.io",
+  "https://3.236.58.235",
 ];
 app.use(
   cors({
@@ -52,8 +53,6 @@ mongoose.connect(process.env.CONNECTION_YaRa, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -126,7 +125,7 @@ app.post(
     check("Email", "Email does not appear to be valid").isEmail(),
   ],
   (req, res) => {
-        // Handle user registration here
+    // Handle user registration here
     if (!req.body.Username || !req.body.Email) {
       return res.status(400).send("Username, Password, and Email required");
     }
@@ -158,7 +157,6 @@ app.post(
       });
   }
 );
-
 
 /**
  * PUT request to update a user's information.
