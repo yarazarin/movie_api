@@ -13,7 +13,6 @@ const uuid = require("uuid");
 const morgan = require("morgan");
 const Models = require("./models.js");
 const { check, validationResult } = require("express-validator");
-require('dotenv').config();
 
 const Genres = Models.Genre;
 const Director = Models.Director;
@@ -49,7 +48,7 @@ app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect(process.env.CONNECTION_YaRa, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
