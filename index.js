@@ -13,6 +13,7 @@ const uuid = require("uuid");
 const morgan = require("morgan");
 const Models = require("./models.js");
 const { check, validationResult } = require("express-validator");
+require('dotenv').config();
 
 const Genres = Models.Genre;
 const Director = Models.Director;
@@ -25,7 +26,6 @@ let allowedOrigins = [
   "http://localhost:1234",
   "https://yaramyflix.netlify.app",
   "https://yarazarin.github.io",
-  "https://3.236.58.235",
 ];
 app.use(
   cors({
@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-mongoose.connect(process.env.CONNECTION_YaRa, {
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
