@@ -25,6 +25,8 @@ let allowedOrigins = [
   "http://localhost:1234",
   "https://yaramyflix.netlify.app",
   "https://yarazarin.github.io",
+  "http://cf-front.s3-website-us-east-1.amazonaws.com",
+  "https://cf-front.s3-website-us-east-1.amazonaws.com",
 ];
 app.use(
   cors({
