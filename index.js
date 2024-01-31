@@ -27,6 +27,7 @@ let allowedOrigins = [
   "https://yarazarin.github.io",
   "http://cf-front.s3-website-us-east-1.amazonaws.com",
   "https://cf-front.s3-website-us-east-1.amazonaws.com",
+  "http://my-alb-52706256.us-east-1.elb.amazonaws.com",
 ];
 app.use(
   cors({
