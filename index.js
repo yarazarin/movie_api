@@ -19,6 +19,7 @@ const Director = Models.Director;
 const Movies = Models.Movie;
 const Users = Models.User;
 
+
 let allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:4200",
