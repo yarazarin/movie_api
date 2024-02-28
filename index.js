@@ -13,9 +13,6 @@ const uuid = require("uuid");
 const morgan = require("morgan");
 const Models = require("./models.js");
 const { check, validationResult } = require("express-validator");
-const AWS = require('aws-sdk');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
 
 require('dotenv').config()
 
@@ -24,7 +21,6 @@ const Genres = Models.Genre;
 const Director = Models.Director;
 const Movies = Models.Movie;
 const Users = Models.User;
-
 
 let allowedOrigins = [
   "http://localhost:8080",
@@ -68,59 +64,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan("common"));
-
-// Configure AWS SDK
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
-});
-
-// Create an instance of the S3 service
-const s3 = new AWS.S3();
-
-// Configure multer for file uploads
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.AWS_S3_BUCKET_NAME,
-    contentType: multerS3.AUTO_CONTENT_TYPE,
-    acl: 'public-read', // Set ACL permissions for uploaded files
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString() + '-' + file.originalname);
-    }
-  })
-});
-
-/**
- * Root route to welcome users to the application.
- */
-
-app.get("/", (req, res) => {
-  res.send("WELCOME TO MYFLIX!");
-});
-
-// Routes for users, movies, etc. (unchanged)
-
-// Route to list objects in the S3 bucket
-app.get('/listObjects', (req, res) => {
-  const params = {
-    Bucket: process.env.AWS_S3_BUCKET_NAME
-  };
-
-  s3.listObjects(params, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Failed to list objects in S3 bucket' });
-    }
-    res.json(data.Contents.map(object => object.Key));
-  });
-});
-
-// Route to upload a file to the S3 bucket
-app.post('/upload', upload.single('file'), (req, res) => {
-  res.status(200).json({ message: 'File uploaded successfully' });
-});
 
 /**
  * Root route to welcome users to the application.
@@ -436,4 +379,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
-
